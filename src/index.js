@@ -6,9 +6,9 @@ const utils = require('./utils');
 const red = chalk.red;
 const green = chalk.green;
 const { currentPath, downloadByNpm } = utils;
-const forceDel = false;
-let tempName = 'reactTemplate';
-let projectName = 'target';
+let forceDel = false;
+let tempName;
+let projectName;
 
 // 重写package.json
 async function rewriteJson() {
@@ -53,9 +53,10 @@ async function renameFile() {
   }
 }
 
-async function create(temp, project) {
+async function create(temp, project, force = false) {
   tempName = temp;
   projectName = project;
+  forceDel = force;
   const file = currentPath + projectName;
   try {
     const res = await fs.pathExists(file);
@@ -82,16 +83,5 @@ async function create(temp, project) {
   }
 }
 
-function excute() {
-  const args = process.argv.splice(2);
-  if (args.length < 2) {
-    console.log(chalk.red('syntax error'));
-    console.log(chalk.green('the command should like this:'));
-    console.log(`${chalk.green('create-project new <templateName> <projectName>')} [options]`);
-    process.exit(1);
-    return;
-  }
-  create(args[0], args[1]);
-}
 
-module.exports = excute;
+module.exports = create;

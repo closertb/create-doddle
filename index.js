@@ -1,18 +1,59 @@
+#!/usr/bin/env node
+
+/**
+ * Copyright (c) Mr Denzel.
+ **/
+
 const commander = require('commander');
 const chalk = require('chalk');
-const { create } = require('./src');
+const packageJson = require('./package.json');
+const excute = require('./src/index');
 
-/* let projectName;
+const tempIndex = {
+  react: 'reactTemplate', // react 模板
+  vue: 'vueTemplate', // vue 模板
+  h5: 'h5Template', // h5模板
+  dva: 'dvaTemplate', // dva模板
+};
 
+let projectName;
+let templateName;
+let inputIndex;
 const program = new commander.Command(packageJson.name)
-  .version(packageJson.version)
-  .arguments('<project-directory>')
-  .usage(`${chalk.green('<templateName>')} ${chalk.green('<project-directory>')} [options]`)
-  .action(name => {
-    projectName = name;
-  })
-  .option('--info', 'print environment debug info')
-  .parse(process.argv);
- */
+  .version('v' + packageJson.version, '-v, --version')
+  .arguments('<templateName>')
+  .arguments('<projectName>')
+  .option('-f, --force', 'force delete the exist director')
+  .option('-d, --directly', 'copy the not specified template')
+  .alias('cp')
+  .description('create-doddle react myProject')
+  .action(function (index,name) {
+    inputIndex = index;
+    // 允许目标项目名和要复制的模板类型名顺序颠倒
+    if (tempIndex[index] || tempIndex[name]) {
+      if (tempIndex[index]) {
+        templateName = tempIndex[index];
+        projectName = name;
+      } else {
+        templateName = tempIndex[name];
+        projectName = index;
+      }
+    }
+    if (program.directly) {
+      templateName = index;
+    }
+  });
 
-excute();
+program.parse(process.argv)
+
+
+if (program.args.length === 0) {
+  console.log(chalk.red('syntax error'));
+  program.help()
+}
+
+if (templateName) {
+  excute(templateName, projectName, program.force);
+} else {
+  console.log(`the template ${inputIndex} you want download do not exist`);
+}
