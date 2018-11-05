@@ -11,21 +11,7 @@ function isWindows() {
   return process.platform === 'win32' || process.env.OSTYPE === 'cygwin' || process.env.OSTYPE === 'msys';
 }
 
-function getNpmPrefix() {
-  const result = spawn(
-    'npm',
-    ['config', 'get', 'prefix']
-  );
-  const stdout = result.stdout;
-  const error = result.error;
-  if (error) {
-    console.log(red(error));
-    return;
-  }
-  return stdout.toString().trim();
-}
-
-function downloadByNpm(callback, template) {
+function downloadByGit(callback, template) {
   console.log(green('start download'));
   console.log(`git@github.com:closertb/${template}.git`);
   const result = spawn(
@@ -44,7 +30,7 @@ const currentPath = process.cwd().replace(/\\/g, '/') + '/';
 
 
 module.exports = {
-  downloadByNpm,
+  downloadByGit,
   isWindows,
   currentPath,
 };

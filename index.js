@@ -9,6 +9,7 @@ const chalk = require('chalk');
 const packageJson = require('./package.json');
 const excute = require('./src/index');
 
+// 四种模板。对应我git仓库四个仓库地址
 const tempIndex = {
   react: 'reactTemplate', // react 模板
   vue: 'vueTemplate', // vue 模板
@@ -21,10 +22,10 @@ let templateName;
 let inputIndex;
 const program = new commander.Command(packageJson.name)
   .version('v' + packageJson.version, '-v, --version')
-  .arguments('<templateName>')
-  .arguments('<projectName>')
   .option('-f, --force', 'force delete the exist director')
   .option('-d, --directly', 'copy the not specified template')
+  .arguments('<templateName>')
+  .arguments('<projectName>')
   .alias('cp')
   .description('create-doddle react myProject')
   .action(function (index,name) {
@@ -43,9 +44,7 @@ const program = new commander.Command(packageJson.name)
       templateName = index;
     }
   });
-
 program.parse(process.argv)
-
 
 if (program.args.length === 0) {
   console.log(chalk.red('syntax error'));
