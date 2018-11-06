@@ -2,7 +2,8 @@
 一个简易的脚手架，一键创建一个简易的react项目；
 使用了ES7语法，且未编译，所以node版本为8最好
 ## 操作指南 ##
-npm install create-doddle -g
+npm install create-doddle -g  
+
 create-doddle [options] ***templateType*** ***projectName***
 
 templateType(模板类型)，有四种模板可选：  
