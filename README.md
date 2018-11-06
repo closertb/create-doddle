@@ -2,4 +2,18 @@
 一键创建一个简易的react项目；
 
 ## 操作指南 ##
-create-doodle new <reactTemplate>  <myProject>
+create-doodle [options] ***templateType*** ***projectName***
+
+templateType(模板类型)，有四种模板可选：  
+
+ - react（当前仅该项可用）
+ - vue
+ - dva
+ - h5
+
+ projectName(项目名称)，基于当前命令执行路径，并将模板拷贝到这个项目文件夹下
+
+ options(可选参数)：
+  - -f: 强制删除当前命令执行路径下已存在的projectName文件夹；
+  - -h：帮助，commander原生提供
+
